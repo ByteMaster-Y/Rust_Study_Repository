@@ -1,9 +1,11 @@
-// 러스트 소유권 규칙:
-// 1) 러스트가 다루는 각각의 값은 소유자 라고 부르는 변수를 가지고 있다.
-// 2) 특정 시점에 값의 소유자는 단 하나뿐이다.
-// 3) 소유자가 범위를 벗어나면 그 값은 제거된다.
+### 러스트 소유권 규칙:
+1) 러스트가 다루는 각각의 값은 소유자 라고 부르는 변수를 가지고 있다.
+2) 특정 시점에 값의 소유자는 단 하나뿐이다.
+3) 소유자가 범위를 벗어나면 그 값은 제거된다.
 
-// String 타입
+---
+
+# String 타입
 
 fn main() {
     let s = String::from("hello"); // 변수 s는 이 지점부터 유효
@@ -12,7 +14,9 @@ fn main() {
     
 } // 여기서 범위를 벗어나서 이제 유효하지 않음.
 
-// 변수와 데이터가 상호작용하는 방식: 복제(Clone)
+---
+
+# 변수와 데이터가 상호작용하는 방식: 복제(Clone)
 
 fn main() {
     let s1 = String::from("hello"); 
@@ -24,7 +28,9 @@ fn main() {
 } 
 // 이 코드는 복사하는 메모리의 크기에 따라 무거운 작업이 될 수도 있다.
 
-// 스택 전용 데이터: 복사(Copy)
+---
+
+# 스택 전용 데이터: 복사(Copy)
 
 fn main() {
     let x = 5;
@@ -33,7 +39,9 @@ fn main() {
     println!("x = {}, y = {}",x , y);
 } 
 
-// 소유권과 함수, 그리고 범위의 관계
+---
+
+# 소유권과 함수, 그리고 범위의 관계
 
 fn main() {
     let s = String::from("hello"); // 변수 s가 범위 내 생성
@@ -58,7 +66,9 @@ fn makes_copy(some_integer: i32) {
     println!("{}", some_integer);
 } // 이 지점에서 some_integer는 범위를 벗어나지만, 아무런 일도 X
 
-// 리턴값의 소유권 이전
+---
+
+# 리턴값의 소유권 이전
 
 fn main() {
     let s1 = give_ownership(); // give_ownership 함수의 리턴값이 변수 s1으로 이동
@@ -82,7 +92,9 @@ fn takes_and_gives_back(a_string: String) -> String {
     a_string
 }
 
-// 참조와 대여
+---
+
+# 참조와 대여
 
 fn main() {
     let s1 = String::from("hello");
@@ -98,7 +110,9 @@ fn calculate_length(s: &String) -> usize {
 
 // 출력 결과 -> hello의 길이는 5입니다.
 
-// 가변 참조
+---
+
+# 가변 참조
 
 fn main() {
     let mut s = String::from("hello");
@@ -113,7 +127,9 @@ fn change(some_string: &mut String) {
 // 하지만 가변 참조에도 한 가지 제약이 있다. 
 // 특정 범위 내의 특정 데이터에 대한 가변 참조는 오직 한 개만 존재해야 한다.
 
-// 죽은 참조
+---
+
+# 죽은 참조
 
 fn main() {
     let reference_to_nothing = dangle();
@@ -128,3 +144,17 @@ fn dangle() -> &String {
 
 // 위 예제를 컴파일 하면 다음과 같은 에러가 발생하는 데
 // "이 함수의 리턴 타입은 대여한 값을 리턴하고자 하지만 실제로 대여해 올 값이 존재하지 않는다."
+
+---
+
+# 
+슬라이스는 소유권을 갖지 않는 타입으로, 데이터를 소유하지 않고 데이터에 대한 참조만을 갖습니다. 따라서 소유권의 규칙이 적용되지 않습니다.
+
+fn main() {
+    let s = String::from("hello world");
+
+    let slice = &s[0..5]; // 문자열 s의 첫 5개 문자에 대한 슬라이스 생성
+
+    println!("slice: {}", slice); // slice: hello
+}
+
