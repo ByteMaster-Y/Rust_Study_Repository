@@ -189,4 +189,18 @@ fn no_dangle() -> String {
 
 ```
 ---
+
 **슬라이스도 소유권을 갖지 않는 타입이다.**
+
+```rust
+fn main() {
+    let s = String::from("hello world");
+
+    let slice = &s[0..5]; // 문자열 s의 첫 5개 문자에 대한 슬라이스 생성
+
+    println!("slice: {}", slice); // slice: hello
+}
+```
+
+---
+
